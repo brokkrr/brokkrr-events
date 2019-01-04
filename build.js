@@ -19,7 +19,7 @@
         //Track searching by zip code on the landing page
         var $form = $("form[action=\"/\"][method=post]");
         $form.find("#arrow").on("click", function() {
-          track("FindLocation", { zip: $form.find("input[type=text]").first().value() });
+          track("FindLocation", { zip: $form.find("input[type=text]").first().val() });
         });
         return;
       case "/Insurances/Insurance":
