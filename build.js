@@ -1,8 +1,14 @@
 (function($) {
 
   var Promise = Promise || PromisePolyfill;
+  var startOnce = callOnce(start);
 
-	$(start);
+  try {
+    $(startOnce);
+  } finally {
+    // Call start if jQuery fails.
+    setTimeout(startOnce, 300);
+  }
 
 	function start() {
 		log("Initialize");
@@ -67,6 +73,17 @@
 		var $body = $(document.body);
 		$body.append($ga);
 	}
+
+  // Misc helpers.
+  
+  function callOnce(fn) {
+    var called = false;
+    return function() {
+      if (called) return;
+      called = true;
+      fn();
+    };
+  }
 
 	function PromisePolyfill(cb) {
     this.resolved = false;
